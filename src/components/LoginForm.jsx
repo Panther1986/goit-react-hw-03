@@ -1,26 +1,51 @@
 import React from "react";
+import { useState } from "react";
 
-const LoginForm = () => {
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+const LoginForm = ({ onLogin }) => {
+  const [values, setValues] = useState({
+    login: "",
+    password: "",
+  });
 
-    const form = evt.target;
-    const { login, password } = form.elements;
+  // const hadleLoginChange = (e) => {
+  //   setValues({ ...values, login: e.target.value });
+  // };
 
-    // Посилання на DOM-елементи
-    console.log(login, password);
+  // const handlePwdChange = (e) => {
+  //   setValues({ ...values, password: e.target.value });
+  // };
 
-    // Значення полів
-    console.log(login.value, password.value);
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
 
-    // Скидаємо значення полів після відправки
-    form.reset();
+    // console.log(e.target.name);
+    // console.log(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(values);
+
+    setValues({
+      login: "",
+      password: "",
+    });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="login" />
-      <input type="password" name="password" />
+      <input
+        type="text"
+        name="login"
+        value={values.login}
+        onChange={handleChange}
+      />
+      <input
+        type="password"
+        name="password"
+        value={values.password}
+        onChange={handleChange}
+      />
       <button type="submit">Login</button>
     </form>
   );
