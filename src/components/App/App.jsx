@@ -14,22 +14,31 @@ const initialValues = [
 
 const App = () => {
   const [contacts, setContacts] = useState(initialValues);
+  const [filter, setFilter] = useState("");
 
   const addContact = (newContact) => {
-    setContacts((prevContact) => {
-      return [...prevContact, newContact];
+    setContacts((prevContacts) => {
+      return [...prevContacts, newContact];
     });
   };
 
-  const deleteContact = (contactId) => {};
+  const deleteContact = (contactId) => {
+    setContacts((prevContacts) => {
+      return prevContacts.filter((contact) => contact.id !== contactId);
+    });
+  };
+
+  const searchBar = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLocaleLowerCase())
+  );
 
   return (
     <div>
       <div>
         <h1>Phonebook</h1>
         <ContactForm initialValues={initialValues} onAdd={addContact} />
-        <SearchBox />
-        <ContactList contacts={contacts} onDelete={deleteContact} />
+        <SearchBox value={filter} onFilter={setFilter} />
+        <ContactList contacts={searchBar} onDelete={deleteContact} />
       </div>
     </div>
   );
