@@ -1,9 +1,10 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.module.css";
 import ContactList from "../ContactList/ContactList";
 import ContactForm from "../ContactForm/ContactForm";
 import SearchBox from "../SearchBox/SearchBox";
+import css from "./App.module.css";
 
 const initialValues = [
   { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
@@ -13,8 +14,15 @@ const initialValues = [
 ];
 
 const App = () => {
-  const [contacts, setContacts] = useState(initialValues);
+  const [contacts, setContacts] = useState(() => {
+    const savedContact = JSON.parse(localStorage.getItem("saved-contact"));
+    return savedContact ? savedContact : initialValues;
+  });
   const [filter, setFilter] = useState("");
+
+  useEffect(() => {
+    window.localStorage.setItem("saved-contact", JSON.stringify(contacts));
+  }, [contacts]);
 
   const addContact = (newContact) => {
     setContacts((prevContacts) => {
@@ -35,7 +43,7 @@ const App = () => {
   return (
     <div>
       <div>
-        <h1>Phonebook</h1>
+        <h1 className={css.mainText}>Phonebook</h1>
         <ContactForm initialValues={initialValues} onAdd={addContact} />
         <SearchBox value={filter} onFilter={setFilter} />
         <ContactList contacts={searchBar} onDelete={deleteContact} />

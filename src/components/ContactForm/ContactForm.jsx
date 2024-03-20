@@ -22,7 +22,6 @@ const ContactForm = ({ onAdd }) => {
   const usernumberId = nanoid();
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
     onAdd({
       id: nanoid(),
       name: values.username,
@@ -36,20 +35,36 @@ const ContactForm = ({ onAdd }) => {
       onSubmit={handleSubmit}
       validationSchema={FeedbackSchema}
     >
-      <Form>
-        <div>
-          <label htmlFor={usernameId}>Name</label>
-          <Field type="text" name="username" id={usernameId} />
+      <Form className={css.formContainer}>
+        <div className={css.labelContainer}>
+          <label className={css.labelForm} htmlFor={usernameId}>
+            Name
+          </label>
+          <Field
+            className={css.fieldForm}
+            type="text"
+            name="username"
+            id={usernameId}
+          />
           <ErrorMessage name="username" as="span" />
         </div>
 
-        <div>
-          <label htmlFor={usernumberId}>Number</label>
-          <Field type="number" name="usernumber" id={usernumberId} />
+        <div className={css.labelContainer}>
+          <label className={css.labelForm} htmlFor={usernumberId}>
+            Number
+          </label>
+          <Field
+            className={css.fieldForm}
+            type="number"
+            name="usernumber"
+            id={usernumberId}
+          />
           <ErrorMessage name="usernumber" as="span" />
         </div>
 
-        <button type="submit">Add contact</button>
+        <button className={css.btnForm} type="submit">
+          Add contact
+        </button>
       </Form>
     </Formik>
   );
