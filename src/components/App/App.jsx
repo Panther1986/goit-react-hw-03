@@ -41,7 +41,7 @@ const App = () => {
   );
 
   return (
-    <div>
+    <div className={css.mainContainer}>
       <div>
         <h1 className={css.mainText}>Phonebook</h1>
         <ContactForm initialValues={initialValues} onAdd={addContact} />
